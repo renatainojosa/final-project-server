@@ -4,8 +4,10 @@ const express = require('express');
 const app = express();
 
 //banco de dados
+require('./db');
 
 //configurações
+require('./configs')(app);
 
 //rotas
 
