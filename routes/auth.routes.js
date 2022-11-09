@@ -91,6 +91,10 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
+router.put('/edit/:id', async (req, res, next) => {
+    
+})
+
 router.get('/verify', isAuthenticated, (req, res, next) => {
     res.status(200).json(req.payload)
 });
