@@ -36,6 +36,10 @@ const petSchema = new Schema({
         type: Boolean,
         default: 'I don\'t know'
     },
+    profileImgUrl: {
+        type: String,
+        default: 'images/default-avatar.png'
+    },
     owner: [{ type: Schema.Types.ObjectId, ref: 'User'}],
 }, { timestamps: true})
 
