@@ -91,8 +91,15 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
-router.put('/edit/:id', async (req, res, next) => {
-    
+router.put('/:userId/edit', isAuthenticated, async (req, res, next) => {
+    const { userId } = req.params
+    const { username, email, contact, password, profileImgUrl } = req.body;
+    try {
+        const userFromDB = await User.findByIdAndUpdate(userId, { username, email, contact, password, profileImgUrl }, {new: true})
+        res.status(200).json(userFromDB)
+    } catch (error) {
+        next(error)
+    }
 })
 
 router.get('/verify', isAuthenticated, (req, res, next) => {
