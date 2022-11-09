@@ -4,30 +4,39 @@ const petSchema = new Schema({
     name: {
         type: String,
     },
+    description: {
+        type: String
+    },
     category: {
         type: String,  
+        required: true,
         enum: ['dog', 'cat']
     },
     gender: {
         type: String,
-        enum: ['male', 'female']
+        required: true,
+        enum: ['male', 'female', 'not identified']
     },
     breed: {
         type: String,
+        default: 'I don\'t know',
     },
     age: {
-        type: Number
+        type: Number,
+        default: 'I don\'t know'
     },
     color: {
         type: String
     },
     castrated: {
-        type: Boolean
+        type: Boolean,
+        default: 'I don\'t know'
     },
     vaccinated: {
-        type: Boolean
+        type: Boolean,
+        default: 'I don\'t know'
     },
-    owner: [{ type: Schema.Types.ObjectId, ref: 'User'}]
+    owner: [{ type: Schema.Types.ObjectId, ref: 'User'}],
 }, { timestamps: true})
 
 module.exports = model('Pet', petSchema);
