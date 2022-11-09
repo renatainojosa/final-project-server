@@ -8,8 +8,13 @@ const User = require('../models/User.model');
 const saltRounds = 10;
 
 //rotas de autenticação
-router.get('/', (req, res, next) => {
-    res.json('Tudo certo aqui!')
+router.get('/users', async (req, res, next) => {
+    try {
+        const usersFromDB = await User.find()
+        res.status(200).json(usersFromDB)        
+    } catch (error) {
+        next(error)
+    }
 });
 
 router.post('/signup', async (req, res, next) => {
