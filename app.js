@@ -1,6 +1,7 @@
 //pacotes
 require('dotenv/config');
 const express = require('express');
+const { isAuthenticated } = require('./middlewares/jwt.middleware');
 const app = express();
 
 //banco de dados
@@ -11,6 +12,7 @@ require('./configs')(app);
 
 //rotas
 app.use('/auth', require('./routes/auth.routes'));
+app.use('/pets', isAuthenticated, require('./routes/pets.routes'));
 
 //erros
 require('./error-handling')(app);
