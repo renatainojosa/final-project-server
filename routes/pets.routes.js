@@ -26,4 +26,38 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.get('/:petId', async (req, res, next) => {
+    const { petId } = req.params; 
+
+    try {
+        const petFromDB = await Pet.findById(petId)
+        res.status(200).json(petFromDB)
+    } catch (error) {
+        next(error)
+    }
+});
+
+router.put('/:petId/edit', async (req, res, next) => {
+    const { petId } = req.params;
+    const { name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl } = req.body;
+
+    try {
+    const petFromDB = await Pet.findByIdAndUpdate(petId, { name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl }, {new: true})
+    res.status(200).json(petFromDB)
+    } catch (error) {
+        next(error)
+    }
+});
+
+router.delete('/:petId', async (req, res, next) => {
+    const { petId } = req.params;
+
+    try {
+        const petFromDB = await Pet.findByIdAndRemove(petId)
+        res.status(204).json(petFromDB)
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = router;
