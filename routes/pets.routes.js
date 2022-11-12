@@ -45,7 +45,7 @@ router.put('/:petId/edit', async (req, res, next) => {
 
     try {
     const petFromDB = await Pet.findByIdAndUpdate(petId, { name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl }, {new: true})
-    res.status(200).json(petFromDB)
+    res.status(200).json({ message: `Pet ${petId} atualizado: ${petFromDB.name}`});
     } catch (error) {
         next(error)
     }
