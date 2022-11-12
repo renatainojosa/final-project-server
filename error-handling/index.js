@@ -1,6 +1,6 @@
 const handleError = (app) => {
     app.use((req, res, next) => {
-        req.status(404).json('Não encontrado!');
+        res.status(404).json('Não encontrado!');
     })
 
     app.use((error, req, res, next) => {

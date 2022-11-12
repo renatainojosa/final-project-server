@@ -7,9 +7,7 @@ module.exports = (app) => {
 
     const FRONTEND_URL = process.env.ORIGIN || 'http://localhost:3000';
 
-    app.use(cors({
-        origin: [FRONTEND_URL],
-    }));
+    app.use(cors());
 
     app.use(logger('dev'));
 
