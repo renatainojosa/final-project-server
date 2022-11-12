@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const User = require('../models/User.model')
 const Pet = require('../models/Pet.model')
-const Ong = require('../models/Ong.model')
+// const Ong = require('../models/Ong.model')
 
 router.post('/new-pet', async (req, res, next) => {
     const { name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl, userId } = req.body;
@@ -11,7 +11,7 @@ router.post('/new-pet', async (req, res, next) => {
     try {
         const petFromDB = await Pet.create({name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl, userId: _id});
         await User.findByIdAndUpdate(_id, { $push: {pets: petFromDB._id}}, {new: true})
-        await 
+        // await Ong.findByIdAndUpdate()
         res.status(200).json(petFromDB)
     } catch (error) {
         console.error('Error trying to create pet', error);
