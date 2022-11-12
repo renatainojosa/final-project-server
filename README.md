@@ -1,4 +1,13 @@
-Auth User Routes:
+# ADOPT A JOSE - API
+
+## Description:
+
+That's an API (server) deployed on _cyclic_ and the root fo the API is:
+<a href="https://puce-super-dalmatian.cyclic.app/"></a>
+
+The available endpoints are the following:
+
+### Auth User Routes:
 
 | METHOD  | Endpoint      | Response  | Action                        |
 |:-------:|:-------------:|:---------:|:-----------------------------:|
@@ -7,7 +16,7 @@ Auth User Routes:
 | POST    | /auth/login   |  { message: "User logged" }  | Login and create a token      |
 | PUT     | /auth/:userId/edit | { message: "User updated"} | Update the user |
 
-Auth ONG Routes:
+### Auth ONG Routes:
 
 | METHOD  | Endpoint      | Response  | Action                        |
 |:-------:|:-------------:|:---------:|:-----------------------------:|
@@ -16,7 +25,7 @@ Auth ONG Routes:
 | POST    | /auth-ongs/login   |  {message: "ONG logged"}  | Login and create a token      |
 | PUT     | /auth/:ongId/edit | { message: "ONG updated"} | Update the ONG |
 
-Pets Routes:
+### Pets Routes:
 
 | METHOD  | Endpoint      | Response  | Action                        |
 |:-------:|:-------------:|:---------:|:-----------------------------:|
@@ -25,3 +34,13 @@ Pets Routes:
 | POST    | /pets/new-pet  |  {pet}   | Create a new pet             |
 | PUT     | /pets/:petId/edit | { message: "Pet updated"} | Update the pet |
 | DEL     | /pets/:petId | { message: "Pet removed" } | Delete a specific pet
+
+## Colaboradores:
+
+<a href="https://github.com/renatainojosa">
+    <sub><b>Renata Inojosa</b></sub>
+</a>
+<br />
+<a href="https://github.com/walisonabram">
+    <sub><b>Walison Abram</b></sub>
+</a>
