@@ -12,6 +12,7 @@ require('./configs')(app);
 
 //rotas
 app.use('/auth', require('./routes/auth.routes'));
+app.use('/auth-ongs', require('./routes/auth.ong.routes'))
 app.use('/pets', isAuthenticated, require('./routes/pets.routes'));
 
 //erros
