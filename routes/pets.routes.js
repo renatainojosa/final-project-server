@@ -2,16 +2,16 @@ const router = require('express').Router();
 
 const User = require('../models/User.model')
 const Pet = require('../models/Pet.model')
-// const Ong = require('../models/Ong.model')
+const Ong = require('../models/Ong.model')
 
 router.post('/new-pet', async (req, res, next) => {
-    const { name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl, userId } = req.body;
+    const { name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl} = req.body;
     const {_id} = req.payload;
 
     try {
-        const petFromDB = await Pet.create({name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl, userId: _id});
+        const petFromDB = await Pet.create({name, description, category, gender, breed, age, color, castrated, vaccinated, profileImgUrl, ownerId: _id});
         await User.findByIdAndUpdate(_id, { $push: {pets: petFromDB._id}}, {new: true})
-        // await Ong.findByIdAndUpdate()
+        await Ong.findByIdAndUpdate(_id, { $push: {pets: petFromDB._id}}, {new: true})
         res.status(200).json(petFromDB)
     } catch (error) {
         console.error('Error trying to create pet', error);
@@ -53,13 +53,17 @@ router.put('/:petId/edit', async (req, res, next) => {
 
 router.delete('/:petId', async (req, res, next) => {
     const { petId } = req.params;
+    const {_id} = req.payload;
 
     try {
-        const petFromDB = await Pet.findByIdAndRemove(petId)
-        res.status(204).json(petFromDB)
+        await Ong.findByIdAndUpdate(_id, { $pull: {pets: petId}}, {new: true})
+        await User.findByIdAndUpdate(_id, { $pull: {pets: petId}}, {new: true})
+        await Pet.findByIdAndRemove(petId)
+        res.status(204).json()
     } catch (error) {
         next(error)
     }
 })
+
 
 module.exports = router;

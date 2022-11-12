@@ -37,7 +37,7 @@ const petSchema = new Schema({
         type: String,
         default: 'images/default-avatar.png'
     },
-    userId: {type: Schema.Types.ObjectId, ref: 'User'},
+    ownerId: {type: Schema.Types.ObjectId},
 }, { timestamps: true})
 
 module.exports = model('Pet', petSchema);
