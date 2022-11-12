@@ -80,7 +80,7 @@ router.post('/login', async (req, res, next) => {
             process.env.JWT_SECRET,
             {
                 algorithm: "HS256",
-                expiresIn: '3d'
+                expiresIn: '15d'
             }
         )
 
