@@ -3,7 +3,7 @@
 ## Description:
 
 That's an API (server) deployed on _cyclic_ and the root fo the API is:
-<a href="https://puce-super-dalmatian.cyclic.app/"></a>
+"https://puce-super-dalmatian.cyclic.app/" 
 
 The available endpoints are the following:
 
