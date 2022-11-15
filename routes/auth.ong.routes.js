@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/signup', async (req, res, next) => {
-    const {username, email, identification, password, contact, acceptDonation} = req.body;
+    const {username, email, identification, password, contact, acceptDonation, profileImgUrl} = req.body;
     try {
         if (!username || !email || !password || !contact || !identification || !acceptDonation) {
             const error = new Error('Campos de preenchimento obrigatório!');
@@ -37,6 +37,7 @@ router.post('/signup', async (req, res, next) => {
         contact,
         acceptDonation,
         passwordHash: hash,
+        profileImgUrl
     });
     res.status(201).json(ongFromDB);
     } catch (error) {
