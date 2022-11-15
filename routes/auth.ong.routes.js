@@ -54,12 +54,12 @@ router.post('/signup', async (req, res, next) => {
 });
 
 router.post('/login', async (req, res, next) => {
-    const { identification, password } = req.body;
+    const { email, password } = req.body;
     try {
-        if (!identification || !password) {
+        if (!email || !password) {
             return res.status(400).json('Campos de email e senha obrigatórios!')
         }
-        const ongFromDB = await Ong.findOne({ identification });
+        const ongFromDB = await Ong.findOne({ email });
 
         if(!ongFromDB) {
             return res.status(401).json('Usuário ou senha não encontrado!');
