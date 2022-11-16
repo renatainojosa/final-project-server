@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         allowed_formats: ['jpg', 'png'],
-        folder: 'adopte-a-pet',
+        folder: 'adopt-a-joseph',
     }
 });
 
