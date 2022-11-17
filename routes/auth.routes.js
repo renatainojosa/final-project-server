@@ -4,6 +4,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const User = require("../models/User.model");
+const fileUploader = '../configs/cloudinary.config.js';
 const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 const saltRounds = 10;
@@ -18,9 +19,8 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-router.post("/signup", async (req, res, next) => {
-  const { username, email, password, contact, profileImgUrl } =
-    req.body;
+router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
+  const { username, email, password, contact, profileImgUrl } = req.body;
   try {
     if (!username || !email || !password || !contact) {
       const error = new Error("Campos de preenchimento obrigatório!");
@@ -36,7 +36,7 @@ router.post("/signup", async (req, res, next) => {
       email,
       contact,
       passwordHash: hash,
-      profileImgUrl,
+      profileImgUrl: req.file.path,
     });
     res.status(201).json(userFromDB);
   } catch (error) {
