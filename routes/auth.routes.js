@@ -4,7 +4,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const User = require("../models/User.model");
-// const fileUploader = require('../configs/cloudinary.config.js');
+const fileUploader = require('../configs/cloudinary.config.js');
 const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 const saltRounds = 10;
@@ -20,7 +20,7 @@ router.get("/users", async (req, res, next) => {
 });
 
 //fileUploader.single('profileImgUrl') -> usar antes do async
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { username, email, password, contact } = req.body;
   try {
     if (!username || !email || !password || !contact) {
@@ -43,7 +43,7 @@ router.post("/signup", async (req, res, next) => {
       email,
       contact,
       passwordHash: hash,
-      profileImgUrl,
+      profileImgUrl: req.file.path
       //req.file.path -> colocar no profileImgUrl
     });
     res.status(201).json(userFromDB);
