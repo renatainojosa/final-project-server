@@ -22,14 +22,8 @@ router.get("/users", async (req, res, next) => {
 router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { username, email, password, confirmPassword, contact, profileImgUrl } = req.body;
   try {
-    if (!username || !email || !password || !confirmPassword || !contact) {
+    if (!username || !email || !password || !contact) {
       const error = new Error("Campos de preenchimento obrigatório!");
-      error.status = 400;
-      throw error;
-    }
-
-    if (password != confirmPassword) {
-      const error = new Error("Senhas não conferem!");
       error.status = 400;
       throw error;
     }
