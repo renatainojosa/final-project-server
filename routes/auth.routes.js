@@ -19,7 +19,6 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-//fileUploader.single('profileImgUrl') -> usar antes do async
 router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { username, email, password, contact } = req.body;
   try {
@@ -44,7 +43,6 @@ router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, ne
       contact,
       passwordHash: hash,
       profileImgUrl: req.file.path
-      //req.file.path -> colocar no profileImgUrl
     });
     res.status(201).json(userFromDB);
   } catch (error) {
