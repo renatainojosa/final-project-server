@@ -20,7 +20,7 @@ router.get("/users", async (req, res, next) => {
 });
 
 router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
-  const { username, email, password, contact, profileImgUrl } = req.body;
+  const { username, email, password, contact } = req.body;
   try {
     if (!username || !email || !password || !contact) {
       const error = new Error("Campos de preenchimento obrigatório!");
