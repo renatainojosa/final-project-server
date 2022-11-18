@@ -43,7 +43,6 @@ router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, ne
       passwordHash: hash,
       profileImgUrl: req.file.path
     });
-    console.log(res);
     res.status(201).json(userFromDB);
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
