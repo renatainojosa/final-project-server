@@ -33,7 +33,6 @@ router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, ne
       throw error;
     }
 
-    console.log('arquivo:', req.file)
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
 
