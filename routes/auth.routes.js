@@ -107,15 +107,15 @@ router.put("/:userId/edit", isAuthenticated, fileUploader.single('profileImgUrl'
 });
 
 router.get("/verify", isAuthenticated, async (req, res, next) => {
-  res.status(200).json(req.payload);
-  // try {
-  //   const { _id } = req.payload;
-  //   const userFromDB = await User.findById(_id);
-  //   if (!userFromDB) throw new Error('token não é de user')
-  //   res.status(200).json(req.payload);
-  // } catch (error) {
-  //   next(error)
-  // }
+  // res.status(200).json(req.payload);
+  try {
+    const { _id } = req.payload;
+    const userFromDB = await User.findById(_id);
+    if (!userFromDB) throw new Error('token não é de user')
+    res.status(200).json(req.payload);
+  } catch (error) {
+    next(error)
+  }
 });
 
 module.exports = router;
