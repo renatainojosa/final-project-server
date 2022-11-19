@@ -35,15 +35,13 @@ router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, ne
 
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
+    
+    const userInfo = {username, email, contact, passwordHash: hash}
 
-    const userFromDB = await User.create({
-      username,
-      email,
-      contact,
-      passwordHash: hash,
-      profileImgUrl: req.file.path
-    });
-    res.status(201).for(userFromDB);
+    if (req.file) userInfo.profileImgUrl = req.file.path;
+
+    const userFromDB = await User.create(userInfo);
+    res.status(201).json(userFromDB);
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       res.status(400).json(error.message);
