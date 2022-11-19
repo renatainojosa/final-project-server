@@ -27,11 +27,6 @@ router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, ne
       error.status = 400;
       throw error;
     }
-    // if(!req.file) {
-    //   const error = new Error('Requisição sem arquivo.');
-    //   error.status = 400;
-    //   throw error;
-    // }
 
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
