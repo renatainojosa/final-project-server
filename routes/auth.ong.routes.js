@@ -150,7 +150,7 @@ router.put(
   }
 );
 
-router.get("/verify", isAuthenticated, (req, res, next) => {
+router.get("/verify", isAuthenticated, async (req, res, next) => {
   try {
     const { _id } = req.payload;
     const ongFromDB = await Ong.findById(_id);
