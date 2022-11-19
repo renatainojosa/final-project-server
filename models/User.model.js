@@ -29,7 +29,10 @@ const userSchema = new Schema({
         type: String,
         default: 'images/default-avatar.png'
     },
-    type: 'User',
+    type: {
+        type: String,
+        default: 'User'
+    },
     pets: [{ type: Schema.Types.ObjectId, ref: 'Pet'}]
 }, { timestamps: true });
 
