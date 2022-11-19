@@ -99,8 +99,7 @@ router.post("/login", async (req, res, next) => {
       email: ongFromDB.email,
       identification: ongFromDB.identification,
       contact: ongFromDB.contact,
-      acceptDonation: ongFromDB.acceptDonation,
-      type: ongFromDB.type
+      acceptDonation: ongFromDB.acceptDonation
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
