@@ -4,7 +4,8 @@ const router = require('express').Router();
 const mongoose = require('mongoose')
 
 const Ong = require('../models/Ong.model');
-const { isAuthenticated } = require('../middlewares/jwt.middleware')
+const fileUploader = require('../configs/cloudinary.config');
+const { isAuthenticated } = require('../middlewares/jwt.middleware');
 
 const saltRounds = 10;
 
@@ -18,8 +19,8 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.post('/signup', async (req, res, next) => {
-    const {username, email, identification, password, contact, acceptDonation, profileImgUrl} = req.body;
+router.post('/signup', fileUploader.single('profileImgUrl'), async (req, res, next) => {
+    const {username, email, identification, password, contact, acceptDonation } = req.body;
     try {
         if (!username || !email || !password || !contact || !identification || !acceptDonation) {
             const error = new Error('Campos de preenchimento obrigatório!');
@@ -30,15 +31,11 @@ router.post('/signup', async (req, res, next) => {
     const salt = bcrypt.genSaltSync(saltRounds)
     const hash = bcrypt.hashSync(password, salt);
 
-    const ongFromDB = await Ong.create({
-        username,
-        email,
-        identification,
-        contact,
-        acceptDonation,
-        passwordHash: hash,
-        profileImgUrl
-    });
+    const ongInfo = {username, email, identification, contact, acceptDonation, passwordHash: hash};
+
+    if (req.file) ongInfo.profileImgUrl = req.file.path;
+
+    const ongFromDB = await Ong.create(ongInfo);
     res.status(201).json(ongFromDB);
     } catch (error) {
         if(error instanceof mongoose.Error.ValidationError) {

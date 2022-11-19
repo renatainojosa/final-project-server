@@ -4,7 +4,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const User = require("../models/User.model");
-const fileUploader = require('../configs/cloudinary.config ')
+const fileUploader = require('../configs/cloudinary.config.js');
 const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 const saltRounds = 10;
@@ -20,7 +20,7 @@ router.get("/users", async (req, res, next) => {
 });
 
 router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
-  const { username, email, password, confirmPassword, contact, profileImgUrl } = req.body;
+  const { username, email, password, contact } = req.body;
   try {
     if (!username || !email || !password || !contact) {
       const error = new Error("Campos de preenchimento obrigatório!");
@@ -30,14 +30,12 @@ router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, ne
 
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
+    
+    const userInfo = {username, email, contact, passwordHash: hash}
 
-    const userFromDB = await User.create({
-      username,
-      email,
-      contact,
-      passwordHash: hash,
-      profileImgUrl: req.file.path,
-    });
+    if (req.file) userInfo.profileImgUrl = req.file.path;
+
+    const userFromDB = await User.create(userInfo);
     res.status(201).json(userFromDB);
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
@@ -88,13 +86,17 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.put("/:userId/edit", isAuthenticated, async (req, res, next) => {
+router.put("/:userId/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { userId } = req.params;
-  const { username, email, contact, password, profileImgUrl } = req.body;
+  const { username, email, contact, password } = req.body;
   try {
+    const userInfo = {username, email, contact, password}
+
+    if (req.file) userInfo.profileImgUrl = req.file.path;
+
     const userFromDB = await User.findByIdAndUpdate(
       userId,
-      { username, email, contact, password, profileImgUrl },
+      { userInfo },
       { new: true }
     );
     res.status(200).json(userFromDB);
