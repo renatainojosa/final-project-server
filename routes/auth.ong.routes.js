@@ -150,16 +150,16 @@ router.put(
   }
 );
 
-router.get("/verify", isAuthenticated, async (req, res, next) => {
-  // res.status(200).json(req.payload);
-  try {
-    const { _id } = req.payload;
-    const ongFromDB = await Ong.findById(_id);
-    if (!ongFromDB) throw new Error('token não é de ong')
-    res.status(200).json(req.payload);
-  } catch (error) {
-    next(error)
-  }
+router.get("/verify", isAuthenticated, (req, res, next) => {
+  res.status(200).json(req.payload);
+  // try {
+  //   const { _id } = req.payload;
+  //   const ongFromDB = await Ong.findById(_id);
+  //   if (!ongFromDB) throw new Error('token não é de ong')
+  //   res.status(200).json(req.payload);
+  // } catch (error) {
+  //   next(error)
+  // }
 });
 
 module.exports = router;
