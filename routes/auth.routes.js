@@ -73,6 +73,7 @@ router.post("/login", async (req, res, next) => {
       username: userFromDB.username,
       email: userFromDB.email,
       contact: userFromDB.contact,
+      type: userFromDB.type
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
