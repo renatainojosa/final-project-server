@@ -38,7 +38,10 @@ const ongSchema = new Schema({
     acceptDonation: {
         type: Boolean,
     },
-    type: 'Ong',
+    type: {
+        type: String,
+        default: 'Ong'
+    },
     pets: [{ type: Schema.Types.ObjectId, ref: 'Pet'}]
 }, { timestamps: true });
 
