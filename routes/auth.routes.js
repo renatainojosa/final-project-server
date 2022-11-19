@@ -86,13 +86,17 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.put("/:userId/edit", isAuthenticated, async (req, res, next) => {
+router.put("/:userId/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { userId } = req.params;
-  const { username, email, contact, password, profileImgUrl } = req.body;
+  const { username, email, contact, password } = req.body;
   try {
+    const userInfo = {username, email, contact, password}
+
+    if (req.file) userInfo.profileImgUrl = req.file.path;
+
     const userFromDB = await User.findByIdAndUpdate(
       userId,
-      { username, email, contact, password, profileImgUrl },
+      { userInfo },
       { new: true }
     );
     res.status(200).json(userFromDB);
