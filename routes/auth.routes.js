@@ -96,7 +96,7 @@ router.put("/:userId/edit", isAuthenticated, fileUploader.single('profileImgUrl'
 
     const userFromDB = await User.findByIdAndUpdate(
       userId,
-      { userInfo },
+      userInfo,
       { new: true }
     );
     res.status(200).json(userFromDB);
