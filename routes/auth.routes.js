@@ -95,19 +95,12 @@ router.put("/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async
 
     if (req.file) userInfo.profileImgUrl = req.file.path;
 
-    // const userFromDB = await User.findByIdAndUpdate(
-    //   _id,
-    //   userInfo,
-    //   { new: true }
-    // );
-    
-    const userFromDB = await User.findById(_id);
-    userFromDB.username = username;
-    userFromDB.email = email;
-    userFromDB.contact = contact;
-    userFromDB.password = password;
-    await userFromDB.save();
-
+    const userFromDB = await User.findByIdAndUpdate(
+      _id,
+      userInfo,
+      { new: true }
+    );
+  
     res.status(200).json(userFromDB);
   } catch (error) {
     next(error);
