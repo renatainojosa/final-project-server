@@ -19,10 +19,10 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-router.get("/user", async (req, res, next) => {
-  const {email} = req.body;
+router.get("/user", isAuthenticated, async (req, res, next) => {
+  const {_id} = req.payload;
   try {
-    const userFromDB = await User.findOne(email);
+    const userFromDB = await User.findById(_id);
     res.status(200).json(userFromDB);
   } catch (error) {
     next(error);
