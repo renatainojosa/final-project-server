@@ -87,7 +87,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.put("/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async (req, res, next) => {
+router.patch("/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { _id } = req.payload;
   const { username, email, contact, password } = req.body;
   try {
