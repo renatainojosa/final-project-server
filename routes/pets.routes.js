@@ -59,10 +59,8 @@ router.post(
 );
 
 router.get("/", async (req, res, next) => {
-    const {_id} = req.payload;
   try {
-    // const userFromDB = await User.findById(_id)
-    const petsFromDB = await Pet.find({ownerId: _id});
+    const userFromDB = await User.findById(_id)
     res.status(200).json(petsFromDB);
   } catch (error) {
     next(error);
@@ -72,7 +70,6 @@ router.get("/", async (req, res, next) => {
 router.get("/user-pets", async (req, res, next) => {
     const {_id} = req.payload;
   try {
-    // const userFromDB = await User.findById(_id)
     const petsFromDB = await Pet.find({ownerId: _id});
     res.status(200).json(petsFromDB);
   } catch (error) {
