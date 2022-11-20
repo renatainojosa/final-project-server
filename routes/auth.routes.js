@@ -20,9 +20,9 @@ router.get("/users", async (req, res, next) => {
 });
 
 router.get("/user", isAuthenticated, async (req, res, next) => {
-  const {_id} = req.payload;
   try {
-    const userFromDB = await User.findById(_id);
+    const {_id} = req.payload;
+    const userFromDB = await User.findById(_id, { username: 1, email: 1, contact: 1, profileImgUrl: 1, _id: 0});
     res.status(200).json(userFromDB);
   } catch (error) {
     next(error);
