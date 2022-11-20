@@ -100,6 +100,7 @@ router.put("/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async
       userInfo,
       { new: true }
     );
+    
     res.status(200).json(userFromDB);
   } catch (error) {
     next(error);
