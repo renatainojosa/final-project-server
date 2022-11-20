@@ -22,7 +22,7 @@ router.get("/users", async (req, res, next) => {
 router.get("/user", isAuthenticated, async (req, res, next) => {
   try {
     const {_id} = req.payload;
-    const userFromDB = await User.findById(_id, { username: 1, email: 1, contact: 1, profileImgUrl: 1, _id: 0});
+    const userFromDB = await User.findById(_id, { passwordHash: 0, _id: 0});
     res.status(200).json(userFromDB);
   } catch (error) {
     next(error);
@@ -99,9 +99,9 @@ router.post("/login", async (req, res, next) => {
 
 router.put("/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async (req, res, next) => {
   const { _id } = req.payload;
-  const { username, email, contact, password } = req.body;
+  const { username, email, contact } = req.body;
   try {
-    const userInfo = {username, email, contact, password}
+    const userInfo = {username, email, contact}
 
     if (req.file) userInfo.profileImgUrl = req.file.path;
 

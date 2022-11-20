@@ -9,11 +9,20 @@ const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 const saltRounds = 10;
 
-//rotas de autenticação
 router.get("/", async (req, res, next) => {
   try {
     const ongsFromDB = await Ong.find();
     res.status(200).json(ongsFromDB);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/ong", isAuthenticated, async (req, res, next) => {
+  try {
+    const {_id} = req.payload;
+    const ongFromDB = await Ong.findById(_id, { passwordHash: 0, _id: 0});
+    res.status(200).json(ongFromDB);
   } catch (error) {
     next(error);
   }
@@ -115,17 +124,16 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.put(
-  "/:ongId/edit",
+  "/edit",
   isAuthenticated,
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
-    const { ongId } = req.params;
+    const { _id } = req.payload;
     const {
       username,
       email,
       identification,
       contact,
-      password,
       acceptDonation,
     } = req.body;
     try {
@@ -134,13 +142,12 @@ router.put(
         email,
         identification,
         contact,
-        password,
         acceptDonation,
       };
 
       if (req.file) ongInfo.profileImgUrl = req.file.path;
 
-      const ongFromDB = await Ong.findByIdAndUpdate(ongId, ongInfo, {
+      const ongFromDB = await Ong.findByIdAndUpdate(_id, ongInfo, {
         new: true,
       });
       res.status(200).json(ongFromDB);
