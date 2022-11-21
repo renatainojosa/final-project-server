@@ -4,7 +4,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const User = require("../models/User.model");
-const fileUploader = require('../configs/cloudinary.config.js');
+const fileUploader = require("../configs/cloudinary.config.js");
 const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 const saltRounds = 10;
@@ -21,44 +21,48 @@ router.get("/users", async (req, res, next) => {
 
 router.get("/user", isAuthenticated, async (req, res, next) => {
   try {
-    const {_id} = req.payload;
-    const userFromDB = await User.findById(_id, { passwordHash: 0, _id: 0});
+    const { _id } = req.payload;
+    const userFromDB = await User.findById(_id, { passwordHash: 0, _id: 0 });
     res.status(200).json(userFromDB);
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/signup", fileUploader.single('profileImgUrl'), async (req, res, next) => {
-  const { username, email, password, contact } = req.body;
-  try {
-    if (!username || !email || !password || !contact) {
-      const error = new Error("Campos de preenchimento obrigatório!");
-      error.status = 400;
-      throw error;
-    }
+router.post(
+  "/signup",
+  fileUploader.single("profileImgUrl"),
+  async (req, res, next) => {
+    const { username, email, password, contact } = req.body;
+    try {
+      if (!username || !email || !password || !contact) {
+        const error = new Error("Campos de preenchimento obrigatório!");
+        error.status = 400;
+        throw error;
+      }
 
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
-    
-    const userInfo = {username, email, contact, passwordHash: hash}
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(password, salt);
 
-    if (req.file) userInfo.profileImgUrl = req.file.path;
+      const userInfo = { username, email, contact, passwordHash: hash };
 
-    const userFromDB = await User.create(userInfo);
-    res.status(201).json(userFromDB);
-  } catch (error) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      res.status(400).json(error.message);
-      return;
+      if (req.file) userInfo.profileImgUrl = req.file.path;
+
+      const userFromDB = await User.create(userInfo);
+      res.status(201).json(userFromDB);
+    } catch (error) {
+      if (error instanceof mongoose.Error.ValidationError) {
+        res.status(400).json(error.message);
+        return;
+      }
+      if (error.code === 11000) {
+        res.status(500).json("Nome de usuário ou email já existe");
+        return;
+      }
+      next(error);
     }
-    if (error.code === 11000) {
-      res.status(500).json("Nome de usuário ou email já existe");
-      return;
-    }
-    next(error);
   }
-});
+);
 
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
@@ -83,7 +87,7 @@ router.post("/login", async (req, res, next) => {
       username: userFromDB.username,
       email: userFromDB.email,
       contact: userFromDB.contact,
-      type: userFromDB.type
+      type: userFromDB.type,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -97,25 +101,28 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.put("/edit", isAuthenticated, fileUploader.single('profileImgUrl'), async (req, res, next) => {
-  const { _id } = req.payload;
-  const { username, email, contact } = req.body;
-  try {
-    const userInfo = {username, email, contact}
+router.put(
+  "/edit",
+  isAuthenticated,
+  fileUploader.single("profileImgUrl"),
+  async (req, res, next) => {
+    const { _id } = req.payload;
+    const { username, email, contact } = req.body;
+    try {
+      const userInfo = { username, email, contact };
 
-    if (req.file) userInfo.profileImgUrl = req.file.path;
+      if (req.file) userInfo.profileImgUrl = req.file.path;
 
-    const userFromDB = await User.findByIdAndUpdate(
-      _id,
-      userInfo,
-      { new: true }
-    );
-  
-    res.status(200).json(userFromDB);
-  } catch (error) {
-    next(error);
+      const userFromDB = await User.findByIdAndUpdate(_id, userInfo, {
+        new: true,
+      });
+
+      res.status(200).json(userFromDB);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);

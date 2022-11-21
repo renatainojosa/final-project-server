@@ -60,7 +60,7 @@ router.post(
 
 router.get("/", async (req, res, next) => {
   try {
-    const petsFromDB = await Pet.find()
+    const petsFromDB = await Pet.find();
     res.status(200).json(petsFromDB);
   } catch (error) {
     next(error);
@@ -68,9 +68,9 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/user-pets", async (req, res, next) => {
-    const {_id} = req.payload;
+  const { _id } = req.payload;
   try {
-    const petsFromDB = await Pet.find({ownerId: _id});
+    const petsFromDB = await Pet.find({ ownerId: _id });
     res.status(200).json(petsFromDB);
   } catch (error) {
     next(error);
@@ -93,7 +93,7 @@ router.put(
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
     const { petId } = req.params;
-    console.log(petId)
+    console.log(petId);
     const {
       name,
       description,
@@ -107,12 +107,12 @@ router.put(
     } = req.body;
 
     try {
-      if (!mongoose.Types.ObjectId.isValid(petId)) {
-        const error = new Error('Specified ID is not valid.');
-        error.status = 400;
-        throw error; 
-      }
-  
+      // if (!mongoose.Types.ObjectId.isValid(petId)) {
+      //   const error = new Error('Specified ID is not valid.');
+      //   error.status = 400;
+      //   throw error;
+      // }
+
       const petInfo = {
         name,
         description,
@@ -126,7 +126,7 @@ router.put(
       };
 
       if (req.file) petInfo.profileImgUrl = req.file.path;
-      
+
       const petFromDB = await Pet.findByIdAndUpdate(petId, petInfo, {
         new: true,
       });
