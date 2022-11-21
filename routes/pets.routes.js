@@ -93,6 +93,7 @@ router.put(
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
     const { petId } = req.params;
+    console.log(petId)
     const {
       name,
       description,
