@@ -60,7 +60,7 @@ router.post(
 
 router.get("/", async (req, res, next) => {
   try {
-    const userFromDB = await User.findById(_id)
+    const petsFromDB = await Pet.find()
     res.status(200).json(petsFromDB);
   } catch (error) {
     next(error);
