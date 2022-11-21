@@ -132,7 +132,7 @@ router.put(
       });
       res
         .status(200)
-        .json({ message: `Pet: ${_id} atualizado: ${petFromDB.name}` });
+        .json({ message: `Petz: ${_id} atualizado: ${petFromDB.name}` });
     } catch (error) {
       next(error);
     }
