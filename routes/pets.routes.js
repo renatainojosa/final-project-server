@@ -89,7 +89,7 @@ router.get("/:petId", async (req, res, next) => {
 });
 
 router.put(
-  "/:petId/edit",
+  "/:petId",
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
     const { petId } = req.params;
