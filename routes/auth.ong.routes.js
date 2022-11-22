@@ -33,6 +33,7 @@ router.post(
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
     const {
+      name,
       username,
       email,
       identification,
@@ -42,6 +43,7 @@ router.post(
     } = req.body;
     try {
       if (
+        !name ||
         !username ||
         !email ||
         !password ||
@@ -58,6 +60,7 @@ router.post(
       const hash = bcrypt.hashSync(password, salt);
 
       const ongInfo = {
+        name,
         username,
         email,
         identification,
@@ -104,6 +107,7 @@ router.post("/login", async (req, res, next) => {
 
     const payload = {
       _id: ongFromDB._id,
+      name: ongFromDB.name,
       username: ongFromDB.username,
       email: ongFromDB.email,
       identification: ongFromDB.identification,
@@ -130,6 +134,7 @@ router.put(
   async (req, res, next) => {
     const { _id } = req.payload;
     const {
+      name,
       username,
       email,
       identification,
@@ -138,6 +143,7 @@ router.put(
     } = req.body;
     try {
       const ongInfo = {
+        name,
         username,
         email,
         identification,
@@ -159,14 +165,6 @@ router.put(
 
 router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
-  // try {
-  //   const { _id } = req.payload;
-  //   const ongFromDB = await Ong.findById(_id);
-  //   if (!ongFromDB) throw new Error('token não é de ong')
-  //   res.status(200).json(req.payload);
-  // } catch (error) {
-  //   next(error)
-  // }
 });
 
 module.exports = router;

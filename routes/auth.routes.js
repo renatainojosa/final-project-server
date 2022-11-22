@@ -33,9 +33,9 @@ router.post(
   "/signup",
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
-    const { username, email, password, contact } = req.body;
+    const { name, username, email, password, contact } = req.body;
     try {
-      if (!username || !email || !password || !contact) {
+      if (!name || !username || !email || !password || !contact) {
         const error = new Error("Campos de preenchimento obrigatório!");
         error.status = 400;
         throw error;
@@ -44,7 +44,7 @@ router.post(
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(password, salt);
 
-      const userInfo = { username, email, contact, passwordHash: hash };
+      const userInfo = { name, username, email, contact, passwordHash: hash };
 
       if (req.file) userInfo.profileImgUrl = req.file.path;
 
@@ -84,6 +84,7 @@ router.post("/login", async (req, res, next) => {
 
     const payload = {
       _id: userFromDB._id,
+      name: userFromDB.name,
       username: userFromDB.username,
       email: userFromDB.email,
       contact: userFromDB.contact,
@@ -107,9 +108,9 @@ router.put(
   fileUploader.single("profileImgUrl"),
   async (req, res, next) => {
     const { _id } = req.payload;
-    const { username, email, contact } = req.body;
+    const { name, username, email, contact } = req.body;
     try {
-      const userInfo = { username, email, contact };
+      const userInfo = { name, username, email, contact };
 
       if (req.file) userInfo.profileImgUrl = req.file.path;
 
@@ -126,14 +127,6 @@ router.put(
 
 router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
-  // try {
-  //   const { _id } = req.payload;
-  //   const userFromDB = await User.findById(_id);
-  //   if (!userFromDB) throw new Error('token não é de user')
-  //   res.status(200).json(req.payload);
-  // } catch (error) {
-  //   next(error)
-  // }
 });
 
 module.exports = router;
