@@ -8,14 +8,14 @@ const petSchema = new Schema({
         type: String
     },
     category: {
-        type: String,  
+        type: Boolean,  
         required: true,
         enum: ['dog', 'cat']
     },
     gender: {
         type: String,
-        required: true,
-        enum: ['male', 'female', 'not identified']
+        enum: ['male', 'female'],
+        default: 'I don\'t know'
     },
     breed: {
         type: String,

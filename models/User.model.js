@@ -1,6 +1,12 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+    },
     username: {
         type: String,
         required: true,
@@ -27,7 +33,7 @@ const userSchema = new Schema({
     },
     profileImgUrl: {
         type: String,
-        default: 'images/default-avatar.png'
+        default: 'https://res.cloudinary.com/dnmzvfkl2/image/upload/v1669160209/adopt-a-joseph/avatar-profile_ndg0cq.png'
     },
     type: {
         type: String,

@@ -1,6 +1,12 @@
 const { Schema, model } = require('mongoose');
 
 const ongSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+    },
     username: {
         type: String,
         required: true,
