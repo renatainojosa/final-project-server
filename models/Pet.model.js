@@ -8,7 +8,7 @@ const petSchema = new Schema({
         type: String
     },
     category: {
-        type: Boolean,  
+        type: String,  
         required: true,
         enum: ['dog', 'cat']
     },
