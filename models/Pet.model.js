@@ -10,11 +10,9 @@ const petSchema = new Schema({
     category: {
         type: String,  
         required: true,
-        enum: ['dog', 'cat']
     },
     gender: {
         type: String,
-        enum: ['male', 'female'],
         required: true,
     },
     breed: {
@@ -28,10 +26,10 @@ const petSchema = new Schema({
         type: String
     },
     castrated: {
-        type: Boolean,
+        type: String,
     },
     vaccinated: {
-        type: Boolean,
+        type: String,
     },
     profileImgUrl: {
         type: String,
