@@ -20,7 +20,7 @@ const petSchema = new Schema({
         default: 'I don\'t know'
     },
     age: {
-        type: Number,
+        type: String,
     },
     color: {
         type: String
