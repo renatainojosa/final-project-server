@@ -106,8 +106,6 @@ router.put(
       vaccinated,
     } = req.body;
 
-    // comentário para redeploy
-
     try {
       const petInfo = {
         name,
