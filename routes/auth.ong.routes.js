@@ -18,10 +18,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/ong", isAuthenticated, async (req, res, next) => {
+router.get("/:ongId", isAuthenticated, async (req, res, next) => {
+  const {ongId} = req.params
   try {
-    const {_id} = req.payload;
-    const ongFromDB = await Ong.findById(_id, { passwordHash: 0, _id: 0});
+    const ongFromDB = await Ong.findById(ongId, { passwordHash: 0, _id: 0});
     res.status(200).json(ongFromDB);
   } catch (error) {
     next(error);
