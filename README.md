@@ -34,8 +34,9 @@ The available endpoints are the following:
 |:-------:|:-------------:|:---------:|:-----------------------------:|
 | GET     | /pets    | [pets]    | Get all the pets from the DB  |
 | GET     | /pets/:petId  | {pet}    | Get a specific pet from the DB  |
+| GET     | /pets/user-pets  | [{pets}]    | Get the pets of a specific user from the DB  |
 | POST    | /pets/new-pet  |  {pet}   | Create a new pet             |
-| PUT     | /pets/:petId/edit | { message: "Pet updated"} | Update the pet |
+| PUT     | /pets/:petId | { message: "Pet updated"} | Update the pet |
 | DEL     | /pets/:petId | { message: "Pet removed" } | Delete a specific pet
 
 ## Colaboradores:
