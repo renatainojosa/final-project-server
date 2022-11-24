@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-// redeploy
+
 router.get("/ong", isAuthenticated, async (req, res, next) => {
   try {
     const {_id} = req.payload;
