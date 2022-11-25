@@ -113,7 +113,8 @@ router.post("/login", async (req, res, next) => {
       identification: ongFromDB.identification,
       contact: ongFromDB.contact,
       acceptDonation: ongFromDB.acceptDonation,
-      type: ongFromDB.type
+      type: ongFromDB.type,
+      profileImgUrl: ongFromDB.profileImgUrl
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

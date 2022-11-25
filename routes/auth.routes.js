@@ -9,7 +9,6 @@ const { isAuthenticated } = require("../middlewares/jwt.middleware");
 
 const saltRounds = 10;
 
-//rotas de autenticação
 router.get("/users", async (req, res, next) => {
   try {
     const usersFromDB = await User.find();
@@ -89,6 +88,7 @@ router.post("/login", async (req, res, next) => {
       email: userFromDB.email,
       contact: userFromDB.contact,
       type: userFromDB.type,
+      profileImgUrl: userFromDB.profileImgUrl
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
