@@ -27,7 +27,7 @@ router.get("/user", isAuthenticated, async (req, res, next) => {
     next(error);
   }
 });
-
+// redeploy
 router.get("/:userId", isAuthenticated, async (req, res, next) => {
   const {userId} = req.params
   try {
