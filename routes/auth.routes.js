@@ -28,6 +28,16 @@ router.get("/user", isAuthenticated, async (req, res, next) => {
   }
 });
 
+router.get("/:userId", isAuthenticated, async (req, res, next) => {
+  const {userId} = req.params
+  try {
+    const userFromDB = await User.findById(userId, { passwordHash: 0, _id: 0});
+    res.status(200).json(userFromDB);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post(
   "/signup",
   fileUploader.single("profileImgUrl"),
