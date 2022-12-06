@@ -17,7 +17,6 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-
 router.get("/:ongId", isAuthenticated, async (req, res, next) => {
   const {ongId} = req.params
   try {
