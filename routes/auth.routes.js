@@ -18,7 +18,7 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-router.get("/:idUser", isAuthenticated, async (req, res, next) => {
+router.get("/:idUser", async (req, res, next) => {
   const {idUser} = req.params
   console.log(idUser)
 });
