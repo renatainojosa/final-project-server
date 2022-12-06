@@ -18,10 +18,10 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-router.get("/:idUser", async (req, res, next) => {
-  const {idUser} = req.params
-  console.log(idUser)
-});
+// router.get("/:idUser", async (req, res, next) => {
+//   const {idUser} = req.params
+//   console.log(idUser)
+// });
 // router.get("/:userId", async (req, res, next) => {
 //   const {userId} = req.params
 //   try {
