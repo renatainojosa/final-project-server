@@ -18,6 +18,10 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
+router.get("/:userId", isAuthenticated, async (req, res, next) => {
+  const {userId} = req.params
+  console.log(userId)
+});
 // router.get("/:userId", isAuthenticated, async (req, res, next) => {
 //   const {userId} = req.params
 //   try {
@@ -27,7 +31,7 @@ router.get("/users", async (req, res, next) => {
 //     next(error);
 //   }
 // });
-// redeploy
+
 router.get("/user", isAuthenticated, async (req, res, next) => {
   try {
     const { _id } = req.payload;
