@@ -27,7 +27,7 @@ router.get("/owner/:userId", isAuthenticated, async (req, res, next) => {
     next(error);
   }
 });
-//redeploy
+
 router.get("/user", isAuthenticated, async (req, res, next) => {
   try {
     const { _id } = req.payload;
