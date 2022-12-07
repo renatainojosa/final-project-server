@@ -26,7 +26,7 @@ router.get("/:ongId", isAuthenticated, async (req, res, next) => {
     next(error);
   }
 });
-//redeploy
+
 router.post(
   "/signup",
   fileUploader.single("profileImgUrl"),
