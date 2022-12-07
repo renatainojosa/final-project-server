@@ -21,7 +21,6 @@ router.get("/:ongId", isAuthenticated, async (req, res, next) => {
   const {ongId} = req.params
   try {
     const ongFromDB = await Ong.findById(ongId, { passwordHash: 0, _id: 0});
-    console.log(ongFromDB)
     res.status(200).json(ongFromDB);
   } catch (error) {
     next(error);
