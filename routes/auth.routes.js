@@ -18,19 +18,15 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-// router.get("/:idUser", async (req, res, next) => {
-//   const {idUser} = req.params
-//   console.log(idUser)
-// });
-// router.get("/:userId", async (req, res, next) => {
-//   const {userId} = req.params
-//   try {
-//     const userFromDB = await User.findById(userId, { passwordHash: 0, _id: 0});
-//     res.status(200).json(userFromDB);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.get("/owner/:userId", isAuthenticated, async (req, res, next) => {
+  const {userId} = req.params
+  try {
+    const userFromDB = await User.findById(userId, { passwordHash: 0, _id: 0});
+    res.status(200).json(userFromDB);
+  } catch (error) {
+    next(error);
+  }
+});
 //redeploy
 router.get("/user", isAuthenticated, async (req, res, next) => {
   try {
