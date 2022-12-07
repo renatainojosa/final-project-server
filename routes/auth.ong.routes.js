@@ -19,7 +19,6 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:ongId", isAuthenticated, async (req, res, next) => {
   const {ongId} = req.params
-  console.log(ongId)
   try {
     const ongFromDB = await Ong.findById(ongId, { passwordHash: 0, _id: 0});
     console.log(ongFromDB)
@@ -28,7 +27,7 @@ router.get("/:ongId", isAuthenticated, async (req, res, next) => {
     next(error);
   }
 });
-//redeploy
+
 router.post(
   "/signup",
   fileUploader.single("profileImgUrl"),
